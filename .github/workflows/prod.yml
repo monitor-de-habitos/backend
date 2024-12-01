@@ -21,9 +21,9 @@ jobs:
        - name: Login Docker Hub
          run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
        - name: Build docker image
-         run: docker build -t mmsnb/monitor-habitos .
+         run: docker build -t mmsnb/monitor-habitos-empresa .
        - name: Push image docker
-         run: docker push mmsnb/monitor-habitos
+         run: docker push mmsnb/monitor-habitos-empresa
 
 
 
