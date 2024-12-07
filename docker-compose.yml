@@ -5,6 +5,8 @@ services:
     env_file: ./env/mysql.env
     volumes:
       - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     restart: unless-stopped
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
@@ -13,9 +15,14 @@ services:
       retries: 10
 
   app:
-    image: monitordehabitos/:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: monitor-habitos-empresa:latest
     env_file: ./env/app.env
     restart: unless-stopped
+    ports:
+      - "8080:8080"
     depends_on:
       mysql:
         condition: service_healthy
