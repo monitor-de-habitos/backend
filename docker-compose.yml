@@ -3,7 +3,7 @@ services:
   mysql:
     image: mysql:8.0.36
     env_file:
-      - /home/ec2-user/env/mysql.env:/app/backend/env/mysql.env
+      - ./env/mysql.env
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:
