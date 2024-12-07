@@ -2,7 +2,8 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.36
-    env_file: /home/ec2-user/env/mysql.env
+    env_file:
+      - ./env/mysql.env
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:
@@ -19,7 +20,8 @@ services:
       context: .
       dockerfile: Dockerfile
     image: monitor-habitos-empresa:latest
-    env_file: /home/ec2-user/env/app.env
+    env_file:
+      - ./env/app.env
     restart: unless-stopped
     ports:
       - "8080:8080"
