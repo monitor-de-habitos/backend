@@ -39,6 +39,9 @@ jobs:
       - name: Remove docker container if exists
         run: docker rm -f deploy_ghactions || true
 
+      - name: Create backend directory
+        run: mkdir -p backend
+
       - name: Create .env file
         run: |
           echo "MYSQL_ROOT_PASSWORD=secret_root_password" >> backend/.env
