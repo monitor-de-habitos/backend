@@ -33,5 +33,16 @@ jobs:
         run: docker pull mmsnb/monitor-habitos-empresa:latest
       - name: Remove docker container
         run: docker rm -f deploy_ghactions
+      - name: Create .env file
+        run: |
+          echo "MYSQL_ROOT_PASSWORD=secret_root_password" >> .env
+          echo "MYSQL_DATABASE=my_database" >> .env
+          echo "MYSQL_USER=my_user" >> .env
+          echo "MYSQL_PASSWORD=secret_password" >> .env
+          echo "SPRING_PROFILES_ACTIVE=prod" >> .env
+          echo "SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/my_database" >> .env
+          echo "SPRING_DATASOURCE_USERNAME=my_user" >> .env
+          echo "SPRING_DATASOURCE_PASSWORD=secret_password" >> .env
+          echo "APP_JWT_SECRET=super_secret_key" >> .env
       - name: Run docker container
         run: docker-compose up --build
