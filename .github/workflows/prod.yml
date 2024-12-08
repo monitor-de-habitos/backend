@@ -24,6 +24,7 @@ jobs:
          run: docker build -t mmsnb/monitor-habitos-empresa .
        - name: Push image docker
          run: docker push mmsnb/monitor-habitos-empresa
+
   deploy:
     needs: build
     runs-on: self-hosted
