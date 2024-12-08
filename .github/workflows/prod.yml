@@ -11,8 +11,6 @@ jobs:
        - name: Checkout code
          uses: actions/checkout@v3
 
-
-
   deploy:
     needs: build
     runs-on: self-hosted
