@@ -6,55 +6,31 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout code
+         uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Build project
-        run: mvn clean install -DskipTests -Dmaven.test.skip=true
-
-      - name: Login Docker Hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-
-      - name: Build docker image
-        run: docker build -t mmsnb/monitor-habitos-empresa .
-
-      - name: Push image docker
-        run: docker push mmsnb/monitor-habitos-empresa
-
+       - name: Setup Java
+         uses: actions/setup-java@v3
+         with:
+           distribution: 'temurin'
+           java-version: '21'
+       - name: Build project
+         run: mvn clean install -DskipTests -Dmaven.test.skip=true
+       - name: Login Docker Hub
+         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+       - name: Build docker image
+         run: docker build -t mmsnb/monitor-habitos-empresa .
+       - name: Push image docker
+         run: docker push mmsnb/monitor-habitos-empresa
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
         run: docker pull mmsnb/monitor-habitos-empresa:latest
-
-      - name: Remove docker container if exists
-        run: docker rm -f deploy_ghactions || true
-
-      - name: Create backend directory
-        run: mkdir -p backend
-
-      - name: Create .env file
-        run: |
-          echo "MYSQL_ROOT_PASSWORD=secret_root_password" >> backend/.env
-          echo "MYSQL_DATABASE=my_database" >> backend/.env
-          echo "MYSQL_USER=my_user" >> backend/.env
-          echo "MYSQL_PASSWORD=secret_password" >> backend/.env
-          echo "SPRING_PROFILES_ACTIVE=prod" >> backend/.env
-          echo "SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/my_database" >> backend/.env
-          echo "SPRING_DATASOURCE_USERNAME=my_user" >> backend/.env
-          echo "SPRING_DATASOURCE_PASSWORD=secret_password" >> backend/.env
-          echo "APP_JWT_SECRET=super_secret_key" >> backend/.env
-
-      - name: Run docker container with docker-compose
-        run: |
-          cd backend
-          docker-compose --env-file .env up --build
+      - name: Remove docker container
+        run: docker rm -f deploy_ghactions
+      - name: Run docker container
+        run: docker-compose up --build
