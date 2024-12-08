@@ -25,14 +25,12 @@ jobs:
       - name: Push image docker
         run: docker push mmsnb/monitor-habitos-empresa
 
-
-
-
-
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Clean Docker containers
+        run: docker system prune -af || true
       - name: Pull image from docker hub
         run: docker pull mmsnb/monitor-habitos-empresa:latest
       - name: Remove docker container
