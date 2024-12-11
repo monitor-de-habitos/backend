@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -27,7 +27,6 @@ services:
       - mysql
     ports:
       - "8080:8080"
-
 networks:
   app-network:
     driver: bridge
