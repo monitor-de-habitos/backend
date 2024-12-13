@@ -30,6 +30,9 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Create env folde
+        run: |
+          mkdir -p env && touch env/.env
       - name: Pull image from docker hub
         run: docker pull mmsnb/monitor-habitos-empresa:latest
       - name: Remove docker container
