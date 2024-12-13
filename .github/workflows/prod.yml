@@ -40,4 +40,4 @@ jobs:
       - name: Remove docker container
         run: docker rm -f deploy_ghactions
       - name: Run Docker Compose
-        run: docker compose up
+        run: docker compose up --build
