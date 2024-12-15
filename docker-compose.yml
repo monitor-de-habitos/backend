@@ -34,6 +34,7 @@ services:
     image: nginx:stable-alpine
     ports:
       - "80:80"
+
 volumes:
   mysql-data:
 
