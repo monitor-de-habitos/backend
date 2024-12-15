@@ -42,4 +42,4 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull mmsnb/monitor-habitos-empresa:latest
       - name: Run Docker Compose
-        run: docker compose up --build
+        run: docker compose -f ./path/to/docker-compose.yml up --build
