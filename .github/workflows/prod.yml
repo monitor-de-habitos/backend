@@ -36,7 +36,13 @@ jobs:
           touch env/app.env
           touch env/mysql.env
       - name: Remove docker container
-        run: sudo docker rm -f deploy_ghactions
+        run: |
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images -q) -f
+          docker volume rm $(docker volume ls -q)
+          docker network rm $(docker network ls -q)
+          docker system prune -a --volumes -f
       - name: Login Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Pull image from docker hub
