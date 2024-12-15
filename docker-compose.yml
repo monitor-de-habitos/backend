@@ -36,10 +36,8 @@ services:
     depends_on:
       - app
     restart: always
-
 volumes:
   mysql-data:
-
 networks:
   app-network:
     driver: bridge
