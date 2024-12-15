@@ -1,9 +1,6 @@
 version: "3.8"
 services:
-  nginx:
-    image: nginx:stable-alpine
-    ports:
-      - "80:80"
+
   mysql:
     image: mysql:latest
     environment:
@@ -33,6 +30,13 @@ services:
       - nginx
     ports:
       - "8080:8080"
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+volumes:
+  mysql-data:
+
 networks:
   app-network:
     driver: bridge
