@@ -1,6 +1,4 @@
-version: "3.8"
 services:
-
   mysql:
     image: mysql:latest
     environment:
@@ -32,8 +30,12 @@ services:
       - "8080:8080"
   nginx:
     image: nginx:stable-alpine
+    container_name: backend-nginx
     ports:
       - "80:80"
+    depends_on:
+      - app
+    restart: always
 
 volumes:
   mysql-data:
