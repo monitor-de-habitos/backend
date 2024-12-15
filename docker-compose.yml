@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   mysql:
     image: mysql:latest
@@ -10,6 +11,15 @@ services:
       - app-network
     ports:
       - "3306:3306"
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - mysql
 
   app:
     image: my-spring-boot-app
@@ -25,19 +35,9 @@ services:
       - app-network
     depends_on:
       - mysql
-      - nginx
     ports:
       - "8080:8080"
-  nginx:
-    image: nginx:stable-alpine
-    container_name: backend-nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - app
-    restart: always
-volumes:
-  mysql-data:
+
 networks:
   app-network:
     driver: bridge
