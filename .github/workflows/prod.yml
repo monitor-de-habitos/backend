@@ -44,5 +44,7 @@ jobs:
       - name: List files to check docker-compose.yml location
         run: ls -la
       - name: Run Docker Compose
-        run:  docker-compose up --build
+        run: sudo docker-compose up --build
+
+
 
