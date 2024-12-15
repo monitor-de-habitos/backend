@@ -30,7 +30,6 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
       - name: Create env folder
         run: |
           mkdir -p env
@@ -44,9 +43,7 @@ jobs:
         run: docker pull mmsnb/monitor-habitos-empresa:latest
 
       - name: Run docker-compose
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: "./docker/docker-compose.yml"
+        run: docker-compose up -d
 
 
 
