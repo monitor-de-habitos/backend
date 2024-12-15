@@ -30,6 +30,7 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v4
       - name: Create env folder
         run: |
           mkdir -p env
@@ -41,10 +42,14 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Pull image from docker hub
         run: docker pull mmsnb/monitor-habitos-empresa:latest
-      - name: List files to check docker-compose.yml location
-        run: ls -la
-      - name: Run Docker Compose
-        run: sudo docker compose up --build
+
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker/docker-compose.yml"
+
+
+
 
 
 
