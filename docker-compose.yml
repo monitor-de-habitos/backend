@@ -11,6 +11,11 @@ services:
       - app-network
     ports:
       - "3306:3306"
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
   app:
     image: my-spring-boot-app
     build:
