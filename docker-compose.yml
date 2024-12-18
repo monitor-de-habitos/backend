@@ -1,42 +1,47 @@
-version: "3.8"
 services:
   mysql:
     image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file: ./env/mysql.env
+    container_name: mysql
+    restart: unless-stopped
+    volumes:
+      - ./mysql-data:/var/lib/mysql
     networks:
       - app-network
     ports:
       - "3306:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+    container_name: app
+    env_file: ./env/app.env
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+    ports:
+      - "8080:8080"
 
   nginx:
     image: nginx:stable-alpine
+    container_name: nginx
     ports:
       - "80:80"
     networks:
       - app-network
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    restart: unless-stopped
     depends_on:
-      - mysql
-
-  app:
-    image: my-spring-boot-app
-    build:
-      context: .
-    environment:
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      APP_JWT_SECRET: ${APP_JWT_SECRET}
-    networks:
-      - app-network
-    depends_on:
-      - mysql
-    ports:
-      - "8080:8080"
+      - app
 
 networks:
   app-network:
