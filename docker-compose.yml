@@ -31,18 +31,15 @@ services:
       - "8080:8080"
 
   nginx:
-    image: nginx:stable-alpine
     container_name: nginx
+    image: nginx:stable-alpine
     ports:
       - "80:80"
-    networks:
-      - app-network
     volumes:
       - ./nginx:/etc/nginx/conf.d
     restart: unless-stopped
     depends_on:
       - app
-
 networks:
   app-network:
     driver: bridge

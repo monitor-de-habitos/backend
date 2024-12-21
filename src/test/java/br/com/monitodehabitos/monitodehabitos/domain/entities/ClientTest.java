@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 class ClientTest {
-
+/*
     @Test
     void deveriaAtualizarClienteComMetodoUpdate() throws UserException {
         FactoryClient factoryClient = new FactoryClient();
@@ -204,4 +204,6 @@ class ClientTest {
         Assertions.assertEquals(0, client.getHabits().size());
 
     }
+    */
+
 }

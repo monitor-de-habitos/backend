@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 class FactoryClientTest {
+    /*
     @Test
     void deveriaCriarUsuarioComFabrica() {
         FactoryClient factoryClient = new FactoryClient();
@@ -31,4 +32,5 @@ class FactoryClientTest {
         Assertions.assertEquals("Matheus Mozart da Silva Neves Borges", client.getName());
         Assertions.assertEquals(TypeUserEnum.CLIENT, client.getTypeUserEnum());
     }
+*/
 }

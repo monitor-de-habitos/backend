@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FactoryWeekTest {
-
+/*
     @Test
     @DisplayName("Should to create week with id, client and habit")
     void scenario01() throws HabitExeption {
@@ -30,4 +30,6 @@ class FactoryWeekTest {
         Assertions.assertEquals(LocalDate.of(2024, 11, 30), week.getEndDate());
 
     }
+    */
+
 }

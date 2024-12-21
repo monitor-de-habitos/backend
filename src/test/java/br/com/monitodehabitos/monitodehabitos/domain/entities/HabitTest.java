@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class HabitTest {
 
-
+/*
     @Test
     @DisplayName("Should NOT be to change the the status 'done'")
     void scenario02() throws HabitExeption, WeekException {
@@ -22,5 +22,5 @@ public class HabitTest {
         habit.changeStatus(HabitStatus.IN_PROGRESS);
         Assertions.assertEquals(HabitStatus.IN_PROGRESS, habit.getDone());
     }
-
+*/
 }

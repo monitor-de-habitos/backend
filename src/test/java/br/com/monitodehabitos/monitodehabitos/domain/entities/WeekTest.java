@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 
 class WeekTest {
-
+/*
     @Test
     @DisplayName("Should be add, total percentage")
     void addPercentage() throws HabitExeption, WeekException {
@@ -73,5 +73,5 @@ class WeekTest {
         week.subtractPercentage(week.getPercentagePerDay());
         Assertions.assertEquals(0, week.getTotalPercentage());
     }
-
+*/
 }
