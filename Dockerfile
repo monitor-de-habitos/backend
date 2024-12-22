@@ -4,7 +4,7 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
-RUN ./mvnw package -DskipTests
+RUN ./mvnw clean package -DskipTests
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 # Extrai as camadas do JAR usando o Spring Boot Layertools

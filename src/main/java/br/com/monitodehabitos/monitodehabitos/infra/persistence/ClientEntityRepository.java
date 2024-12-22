@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ClientEntityRepository extends JpaRepository<ClientEntity, UUID> {
+public interface ClientEntityRepository extends JpaRepository<ClientEntity, String> {
 
     @Query("SELECT c FROM client c WHERE c.email = :email")
     UserDetails findByEmail(String email);
