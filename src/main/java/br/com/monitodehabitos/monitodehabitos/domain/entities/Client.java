@@ -3,13 +3,13 @@ package br.com.monitodehabitos.monitodehabitos.domain.entities;
 import br.com.monitodehabitos.monitodehabitos.domain.Address;
 import br.com.monitodehabitos.monitodehabitos.domain.enums.TypeUserEnum;
 import br.com.monitodehabitos.monitodehabitos.domain.enums.UserErroEnum;
-import br.com.monitodehabitos.monitodehabitos.domain.enums.WeekErrorEnum;
 import br.com.monitodehabitos.monitodehabitos.domain.exception.HabitExeption;
 import br.com.monitodehabitos.monitodehabitos.domain.exception.UserException;
-import br.com.monitodehabitos.monitodehabitos.domain.exception.WeekException;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Client extends User {
     private Boolean isClient;
@@ -74,4 +74,12 @@ public class Client extends User {
         habit.setClient(null);
     }
 
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "isClient=" + isClient +
+                ", habits=" + habits +
+                '}';
+    }
 }

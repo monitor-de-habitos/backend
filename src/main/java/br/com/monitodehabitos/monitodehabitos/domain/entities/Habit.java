@@ -104,7 +104,6 @@ public class Habit {
         if (!Objects.equals(updateHabit.getDone(), this.getDone()) && updateHabit.getDone() != null) {
             this.done = updateHabit.getDone();
         }
-        
     }
 
     private List<Week> calcEndDayForWeek(LocalDate start, LocalDate end) {
@@ -143,7 +142,6 @@ public class Habit {
                 ", done=" + done +
                 ", start=" + start +
                 ", end=" + end +
-                ", client=" + client +
                 ", weeks=" + weeks +
                 '}';
     }

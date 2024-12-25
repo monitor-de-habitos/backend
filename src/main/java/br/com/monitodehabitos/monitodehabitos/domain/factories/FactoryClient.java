@@ -6,13 +6,14 @@ import br.com.monitodehabitos.monitodehabitos.domain.entities.Habit;
 import br.com.monitodehabitos.monitodehabitos.domain.enums.TypeUserEnum;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class FactoryClient {
     private Client client;
     /*fábrica para criar o usuário, não precisa iniciar com hábtios*/
-    public Client withAllParameters(String id, String email, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt, Address address) {
-        this.client = new Client(id, email, password, name, createdAt, updatedAt, address, TypeUserEnum.CLIENT, true, null);
+    public Client withAllParameters(String id, String email, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt, Address address, List<Habit> habits) {
+        this.client = new Client(id, email, password, name, createdAt, updatedAt, address, TypeUserEnum.CLIENT, true, habits);
         return this.client;
     }
 

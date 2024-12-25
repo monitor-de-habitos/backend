@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Progress {
-
     private String id;
     private LocalDate currentDate;
     private ProgressEnumStatus status;
@@ -51,9 +50,9 @@ public class Progress {
     }
 
     public ProgressEnumStatus changeStatusToCompleteOrNot() {
-        if(this.status.equals(ProgressEnumStatus.NOT_STARTED)){
+        if (this.status.equals(ProgressEnumStatus.NOT_STARTED)) {
             return this.status = ProgressEnumStatus.COMPLETED;
-        } else  {
+        } else {
             return this.status = ProgressEnumStatus.NOT_STARTED;
         }
     }
@@ -76,6 +75,7 @@ public class Progress {
         if (!getCurrentDate().equals(progress.getCurrentDate())) return false;
         return status == progress.status;
     }
+
     @Override
     public int hashCode() {
         int result = getId().hashCode();
@@ -83,7 +83,6 @@ public class Progress {
         result = 31 * result + status.hashCode();
         return result;
     }
-
 
 
 }

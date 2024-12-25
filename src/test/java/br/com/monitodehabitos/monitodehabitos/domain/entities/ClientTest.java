@@ -1,27 +1,35 @@
 package br.com.monitodehabitos.monitodehabitos.domain.entities;
 
 import br.com.monitodehabitos.monitodehabitos.domain.Address;
+import br.com.monitodehabitos.monitodehabitos.domain.enums.TypeUserEnum;
 import br.com.monitodehabitos.monitodehabitos.domain.exception.HabitExeption;
 import br.com.monitodehabitos.monitodehabitos.domain.exception.UserException;
 import br.com.monitodehabitos.monitodehabitos.domain.factories.FactoryClient;
-import br.com.monitodehabitos.monitodehabitos.domain.enums.TypeUserEnum;
 import br.com.monitodehabitos.monitodehabitos.domain.factories.FactoryHabit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 class ClientTest {
-/*
+
+    private String id = UUID.randomUUID().toString();
+    private List<Habit> habits = new ArrayList<>();
+
+
     @Test
     void deveriaAtualizarClienteComMetodoUpdate() throws UserException {
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits
+        );
 
         Address newAddress = new Address(
                 "76820-125",
@@ -34,7 +42,7 @@ class ClientTest {
         );
 
         Client updatedClient = new Client(
-                1L,
+                id,
                 "email-atualizado@gmail.com",
                 "Password@123",
                 "Matheus Mozart Borges",
@@ -42,6 +50,7 @@ class ClientTest {
                 null,
                 newAddress,
                 TypeUserEnum.CLIENT,
+                true,
                 null
         );
 
@@ -63,15 +72,18 @@ class ClientTest {
     void deveriaAtualizarNome() throws UserException {
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits
+        );
 
         Client updatedClient = new Client(
                 null,
                 null,
                 null,
                 "Novo Nome",
+                null,
                 null,
                 null,
                 null,
@@ -88,14 +100,17 @@ class ClientTest {
     void deveriaAtualizarSenha() throws UserException {
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits
+        );
 
         Client updatedClient = new Client(
                 null,
                 null,
                 "NovaSenha@123",
+                null,
                 null,
                 null,
                 null,
@@ -113,9 +128,10 @@ class ClientTest {
         // Arrange
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits);
 
         // Novo endereço para atualizar
         Address newAddress = new Address(
@@ -138,7 +154,8 @@ class ClientTest {
                 null,    // Não altera o `updatedAt`
                 newAddress,
                 null,    // Não altera o `isClient`
-                null     // Não altera o `isClient`
+                null,     // Não altera o `isClient`
+                null
         );
 
         client.updateClient(updatedClient);
@@ -159,14 +176,19 @@ class ClientTest {
     void getHabits() throws HabitExeption {
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits
+
+        );
+
+        System.out.println(client.toString());
 
         FactoryHabit factoryHabit = new FactoryHabit();
-        Habit habit = factoryHabit.withDescriptionAndDate(1L, client, "description", LocalDate.now(), LocalDate.now());
-        Habit habit2 = factoryHabit.withDescriptionAndDate(1L, client, "description", LocalDate.now(), LocalDate.now());
-        Habit habit3 = factoryHabit.withDescriptionAndDate(1L, client, "description", LocalDate.now(), LocalDate.now());
+        Habit habit = factoryHabit.withDescriptionAndDate(client, "description", HabitStatus.NOT_STARTED, LocalDate.now(), LocalDate.now());
+        Habit habit2 = factoryHabit.withDescriptionAndDate(client, "description", HabitStatus.NOT_STARTED, LocalDate.now(), LocalDate.now());
+        Habit habit3 = factoryHabit.withDescriptionAndDate(client, "description", HabitStatus.NOT_STARTED, LocalDate.now(), LocalDate.now());
         client.addHabit(habit);
         client.addHabit(habit2);
         client.addHabit(habit3);
@@ -178,15 +200,18 @@ class ClientTest {
     void addHabit() throws HabitExeption {
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits
+        );
         FactoryHabit factoryHabit = new FactoryHabit();
-        Habit habit = factoryHabit.withDescriptionAndDate(1L, client, "description", LocalDate.now(), LocalDate.now());
+        Habit habit = factoryHabit.withDescriptionAndDate(client, "description", HabitStatus.NOT_STARTED, LocalDate.now(), LocalDate.now());
+
         client.addHabit(habit);
 
-        Assertions.assertEquals("description", client.getHabits().get(0).getDescription());
-        Assertions.assertEquals(1L, client.getHabits().get(0).getId());
+        Assertions.assertEquals("description", client.getHabits().getFirst().getDescription());
+        Assertions.assertEquals(habit.getId(), client.getHabits().getFirst().getId());
     }
 
     @Test
@@ -194,16 +219,17 @@ class ClientTest {
     void removeHabit() throws HabitExeption {
         FactoryClient factoryClient = new FactoryClient();
         Client client = factoryClient.withAllParameters(
-                1L,
+                id,
                 "email@gmail.com", "Bor@5930", "Matheus Mozart da Silva Neves Borges", LocalDateTime.now(),
-                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null));
+                null, new Address("76820-124", "rua miguel chakian", "Porto Velho", "RO", "Nova Porto Velho", "848", null),
+                habits
+        );
         FactoryHabit factoryHabit = new FactoryHabit();
-        Habit habit = factoryHabit.withDescriptionAndDate(1L, client, "description", LocalDate.now(), LocalDate.now());
+        Habit habit = factoryHabit.withDescriptionAndDate(client, "description", HabitStatus.NOT_STARTED, LocalDate.now(), LocalDate.now());
         client.addHabit(habit);
         client.removeHabit(habit);
         Assertions.assertEquals(0, client.getHabits().size());
 
     }
-    */
 
 }

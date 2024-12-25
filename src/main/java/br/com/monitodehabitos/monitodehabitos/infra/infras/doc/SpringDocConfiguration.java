@@ -21,10 +21,12 @@ public class SpringDocConfiguration {
                                         .scheme("bearer")
                                         .bearerFormat("JWT")))
                 .info(new Info()
-                        .title("Voll.med API")
+                        .title("Monitor de hábitos")
                         .description("API para gerenciamento de hábitos. Todos os direitos reservados.")
                         .contact(new Contact()
-                                .name("Time Backend")
+                                .name("Time Backend - Matheus MOzart")
+                                .email("bmozart.dev@gmail.com")
+                                .url("https://www.linkedin.com/in/matheus-mozart-borges/")
                         ));
     }
 }

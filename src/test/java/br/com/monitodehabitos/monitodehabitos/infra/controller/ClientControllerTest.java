@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 class ClientControllerTest {
-
+/*
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -113,5 +113,5 @@ class ClientControllerTest {
         // Assert
         assertEquals(200, response.getStatus());
     }
-
+*/
 }

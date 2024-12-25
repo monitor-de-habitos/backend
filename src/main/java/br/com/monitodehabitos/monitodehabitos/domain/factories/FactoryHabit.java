@@ -22,6 +22,13 @@ public class FactoryHabit {
         if (start == null) {
             throw new HabitExeption("Data de início do hábito não pode ser nula");
         }
+
+        if (end == null) {
+            throw new HabitExeption("Data de fim do hábito não pode ser nula");
+        }
+        if(end.isBefore(start)){
+            throw new HabitExeption("Data final não pode ser anterior a data inicial.");
+        }
         return this.habit = new Habit(description, done,  start, end, client);
     }
 

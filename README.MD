@@ -77,6 +77,10 @@ usuário.
 
 ---
 
+### Como rodar
+
+
+
 ### Conclusão
 
 Esta estrutura permite uma implementação modular e fácil de entender para o monitoramento de hábitos. A divisão semanal

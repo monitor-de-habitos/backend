@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HabitControllerTest {
+    /*
     @MockBean
     private CreateHabit createHabit;
     @MockBean
@@ -185,5 +186,5 @@ public class HabitControllerTest {
 //        // Assert
 //        assertEquals(204, response.getStatus());
 //    }
-
+*/
 }

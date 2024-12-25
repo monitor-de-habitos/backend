@@ -2,6 +2,7 @@ package br.com.monitodehabitos.monitodehabitos.domain.factories;
 
 import br.com.monitodehabitos.monitodehabitos.domain.entities.Client;
 import br.com.monitodehabitos.monitodehabitos.domain.entities.Habit;
+import br.com.monitodehabitos.monitodehabitos.domain.entities.HabitStatus;
 import br.com.monitodehabitos.monitodehabitos.domain.exception.HabitExeption;
 import br.com.monitodehabitos.monitodehabitos.domain.factories.FactoryHabit;
 import org.junit.jupiter.api.Assertions;
@@ -12,13 +13,13 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 
 public class FactoryHabitTest {
-    /*
+
     @Test
     @DisplayName("Should be to create habit")
     void sceraio01() throws HabitExeption {
         Client client = Mockito.mock(Client.class);
         FactoryHabit factoryHabit = new FactoryHabit();
-        Habit habit = factoryHabit.withDescriptionAndDate(1L, client, "Descrição genéria de algo",  LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 30));
+        Habit habit = factoryHabit.withDescriptionAndDate(client, "Descrição genéria de algo", HabitStatus.NOT_STARTED, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 30));
         Assertions.assertEquals("Descrição genéria de algo", habit.getDescription());
         Assertions.assertEquals(LocalDate.of(2024, 11, 1), habit.getStart());
     }
@@ -27,11 +28,11 @@ public class FactoryHabitTest {
     @DisplayName("Should return error when adding habit - Client is null")
     void scenarioErrorClientNull() {
         FactoryHabit factoryHabit = new FactoryHabit();
-
+        Client client = Mockito.mock(Client.class);
         HabitExeption exception = Assertions.assertThrows(
                 HabitExeption.class,
                 () -> {
-                    factoryHabit.withDescriptionAndDate(1L, null, "description", LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 30));
+                    factoryHabit.withDescriptionAndDate(null,"description", HabitStatus.NOT_STARTED, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 30));
                 }
         );
         Assertions.assertEquals("Cliente não pode ser nulo", exception.getMessage());
@@ -45,7 +46,7 @@ public class FactoryHabitTest {
         HabitExeption exception = Assertions.assertThrows(
                 HabitExeption.class,
                 () -> {
-                    factoryHabit.withDescriptionAndDate(1L, client, null,LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 30));
+                    factoryHabit.withDescriptionAndDate(client, null, HabitStatus.NOT_STARTED,LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 30));
                 }
         );
         Assertions.assertEquals("Descrição do hábito não pode ser nula", exception.getMessage());
@@ -58,10 +59,10 @@ public class FactoryHabitTest {
         HabitExeption exception = Assertions.assertThrows(
                 HabitExeption.class,
                 () -> {
-                    factoryHabit.withDescriptionAndDate(1L, client, "description", null, null);
+                    factoryHabit.withDescriptionAndDate(client, "description", HabitStatus.NOT_STARTED, null, null);
                 }
         );
         Assertions.assertEquals("Data de início do hábito não pode ser nula", exception.getMessage());
     }
-    */
+
 }

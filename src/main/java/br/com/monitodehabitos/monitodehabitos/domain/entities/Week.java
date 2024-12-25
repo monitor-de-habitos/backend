@@ -134,7 +134,6 @@ public class Week {
                 ", endDate=" + endDate +
                 ", percentagePerDay=" + percentagePerDay +
                 ", progresses=" + progresses +
-                ", habit=" + habit +
                 ", totalPercentage=" + totalPercentage +
                 '}';
     }
