@@ -1,5 +1,6 @@
 package br.com.monitodehabitos.monitodehabitos.infra.controller;
 
+
 import br.com.monitodehabitos.monitodehabitos.application.useCases.Client.CreateClient;
 import br.com.monitodehabitos.monitodehabitos.application.useCases.Client.DeleteClient;
 import br.com.monitodehabitos.monitodehabitos.application.useCases.Client.FindClient;
@@ -15,6 +16,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static br.com.monitodehabitos.monitodehabitos.infra.utils.ApplicationLogs.log;
 
 @RestController
 @RequestMapping("/client")
@@ -33,36 +36,45 @@ public class ClientController {
         this.updateClient = updateClient;
     }
 
-   @PostMapping()
-    private ResponseEntity create(@RequestBody @Valid CreateClientDto dto){
+    @PostMapping()
+    private ResponseEntity<ResponseDto> create(@RequestBody @Valid CreateClientDto dto) {
+        log.info("Início da criação do usuário::UserController");
         Client client = factoryClient.withoutCreatedatAndUpdatedatParameters(dto.email(), dto.password(), dto.name(),
                 new Address(
                         dto.addressClientDto().cep(), dto.addressClientDto().street(), dto.addressClientDto().city(),
-                dto.addressClientDto().state(), dto.addressClientDto().neighborhood(), dto.addressClientDto().number(), dto.addressClientDto().complement()
+                        dto.addressClientDto().state(), dto.addressClientDto().neighborhood(), dto.addressClientDto().number(), dto.addressClientDto().complement()
                 ));
         this.createClient.create(client);
+        log.info("Fim da criação do usuário::UserController");
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto("Usuário criado com sucesso"));
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<HabitResponseDto> findByID(@PathVariable("id") String id){
+    private ResponseEntity<HabitResponseDto> findByID(@PathVariable("id") String id) {
+        log.info("Início da busca do usuário por id::UserController");
         Client client = this.findClient.findClient(id);
+        log.info("Fim da busca do usuário por id::UserController");
         return ResponseEntity.ok().body(new HabitResponseDto(client));
     }
+
     @DeleteMapping("/{id}")
-    private ResponseEntity delete(@PathVariable("id") String id){
-       this.deleteClient.delete(id);
+    private ResponseEntity delete(@PathVariable("id") String id) {
+        log.info("Início da remoção do usuário por id::UserController");
+        this.deleteClient.delete(id);
+        log.info("Fim da remoção do usuário por id::UserController");
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity update(@PathVariable("id") String id, @RequestBody UpdateClientDto dto) throws UserException {
+    private ResponseEntity<ResponseDto> update(@PathVariable("id") String id, @RequestBody UpdateClientDto dto) throws UserException {
+        log.info("Início da atualização do usuário::UserController");
         Client updatesClient = factoryClient.updateClient(dto.email(), dto.password(), dto.name(),
                 new Address(
                         dto.cep(), dto.street(), dto.city(),
                         dto.state(), dto.neighborhood(), dto.number(), dto.complement()
                 ));
         this.updateClient.update(id, updatesClient);
+        log.info("Fim da atualização do usuário::UserController");
         return ResponseEntity.ok(new ResponseDto("Atualização realizada com sucesso."));
     }
 

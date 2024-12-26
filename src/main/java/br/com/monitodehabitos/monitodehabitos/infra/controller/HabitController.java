@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-
+import static br.com.monitodehabitos.monitodehabitos.infra.utils.ApplicationLogs.log;
 @RestController
 @RequestMapping("/habit")
 public class HabitController {
@@ -47,7 +47,7 @@ public class HabitController {
 
     @PostMapping
     public ResponseEntity<ResponseHabitDto> create(@RequestBody @Valid CreateHabitDto data) throws HabitExeption, WeekException {
-
+        log.info("Início da criação do hábito::HabitController");
         Client client = this.findClient.findClient(data.clientId());
         var dateStart = this.dateValidationAndFormater.validate(data.start());
         var dateEnd = this.dateValidationAndFormater.validate(data.end());
@@ -55,44 +55,54 @@ public class HabitController {
         var newHabit = this.createHabit.create(habit);
         ResponseHabitDto responseDto = new ResponseHabitDto(newHabit);
         URI location = URI.create("/api/habits/" + newHabit.getId());
+        log.info("Fim da criação do hábito::HabitController");
         return ResponseEntity.created(location).body(responseDto);
     }
 
     @PatchMapping("change-habit-status/{id}")
     public ResponseEntity<ResponseHabitDto> changeDo(@PathVariable String id, @RequestBody ChangeDoneDto dateProgress) throws HabitExeption, WeekException {
+        log.info("Início da mudança do hábito do status::HabitController");
         Habit habit = this.changeDoHabit.changeDoHabit(id, dateProgress.status());
+        log.info("Fim da mudança do hábito do status::HabitController");
         return ResponseEntity.ok(new ResponseHabitDto(habit));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ResponseHabitDto> update(@PathVariable String id, @RequestBody UpdateHabitDto data) throws HabitExeption {
-
+        log.info("Início da atualização do hábito::HabitController");
         Habit habit = this.factoryHabit.updateNoDateStater(data.description(), data.done());
         Habit update = this.updateHabit.update(id, habit);
         ResponseHabitDto responseDto = new ResponseHabitDto(update);
+        log.info("Fim da atualização do hábito::HabitController");
         return ResponseEntity.ok(responseDto);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) throws HabitExeption {
+        log.info("Início da remoção do hábito::HabitController");
         this.deleteHabit.delete(id);
+        log.info("Fim da remoção do hábito::HabitController");
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseHabitDto> findById(@PathVariable String id) throws HabitExeption {
+        log.info("Início da busca do hábito por id::HabitController");
         Habit habit = this.findHabit.findById(id);
         ResponseHabitDto responseHabitDto = new ResponseHabitDto(habit);
+        log.info("Fim da busca do hábito por id::HabitController");
         return ResponseEntity.ok(responseHabitDto);
     }
 
     @GetMapping("find-all/{userId}")
     public ResponseEntity<List<ResponseHabitDto>> findAllByUserId(@PathVariable String userId) throws HabitExeption {
+        log.info("Início da busca de todos os hábit::HabitController");
         List<Habit> habits = this.findAllByUser.findAllByUser(userId);
         List<ResponseHabitDto> responseDtos = habits.stream()
                 .map(ResponseHabitDto::new)
                 .toList();
+        log.info("Fim da busca de todos os hábit::HabitController");
         return ResponseEntity.ok(responseDtos);
     }
 }

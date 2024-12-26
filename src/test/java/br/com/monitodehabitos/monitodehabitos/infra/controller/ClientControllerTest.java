@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 class ClientControllerTest {
-/*
+
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -57,7 +57,7 @@ class ClientControllerTest {
         //Assert
         assertEquals(201, response.getStatus());
     }
-
+/*
     @Test
     @DisplayName("Should give back status 200 to findClient.")
     void scenario02() throws Exception {
