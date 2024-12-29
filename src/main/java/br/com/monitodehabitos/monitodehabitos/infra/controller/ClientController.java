@@ -12,6 +12,7 @@ import br.com.monitodehabitos.monitodehabitos.domain.factories.FactoryClient;
 import br.com.monitodehabitos.monitodehabitos.infra.controller.clientDto.CreateClientDto;
 import br.com.monitodehabitos.monitodehabitos.infra.controller.clientDto.HabitResponseDto;
 import br.com.monitodehabitos.monitodehabitos.infra.controller.clientDto.UpdateClientDto;
+import br.com.monitodehabitos.monitodehabitos.infra.email.SendEmailCreateUser;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +28,15 @@ public class ClientController {
     private final FindClient findClient;
     private final DeleteClient deleteClient;
     private final UpdateClient updateClient;
+    private final SendEmailCreateUser emailCreateUser;
 
-    public ClientController(CreateClient createClient, FactoryClient factoryClient, FindClient findClient, DeleteClient deleteClient, UpdateClient updateClient) {
+    public ClientController(CreateClient createClient, FactoryClient factoryClient, FindClient findClient, DeleteClient deleteClient, UpdateClient updateClient, SendEmailCreateUser emailCreateUser) {
         this.createClient = createClient;
         this.factoryClient = factoryClient;
         this.findClient = findClient;
         this.deleteClient = deleteClient;
         this.updateClient = updateClient;
+        this.emailCreateUser = emailCreateUser;
     }
 
     @PostMapping()
@@ -46,6 +49,7 @@ public class ClientController {
                 ));
         this.createClient.create(client);
         log.info("Fim da criação do usuário::UserController");
+        emailCreateUser.send(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto("Usuário criado com sucesso"));
     }
 

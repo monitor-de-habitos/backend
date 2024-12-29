@@ -19,4 +19,6 @@ public interface ClientEntityRepository extends JpaRepository<ClientEntity, Stri
 
     void deleteById(String id);
 
+    boolean existsByEmail(String email);
+
 }

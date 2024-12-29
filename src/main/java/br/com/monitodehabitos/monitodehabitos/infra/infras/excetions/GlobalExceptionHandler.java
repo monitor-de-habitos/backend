@@ -23,7 +23,6 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ResponseError> handleError404(EntityNotFoundException ex) {
         ResponseError responseError = new ResponseError(
@@ -173,6 +172,18 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 HttpStatus.BAD_REQUEST,
                 ex.getErrorDate() // Usando a data do erro da WeekException
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+    }
+
+
+    // Tratamento para WeekException
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ResponseError> handleRunTimeException(RuntimeException ex) {
+        ResponseError responseError = new ResponseError(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
     }

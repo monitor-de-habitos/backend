@@ -5,7 +5,7 @@ public enum UserErroEnum {
     USR0002("Erro ao atualizar o usuário"),
     USR0003("Usuário não encontrado"),
     USR0004("Erro ao excluir o usuário"),
-    USR0005("Nome de usuário já em uso"),
+    USR0005("E-mail do usuário em uso."),
     USR0006("E-mail já cadastrado ou inválido"),
     USR0007("Senha inválida: a senha deve ter no mínimo 8 caracteres, letras maiúsculas e minúsculas, um número e um caractere especial."),
     USR0008("Erro ao resetar a senha"),
