@@ -13,6 +13,9 @@ import br.com.monitodehabitos.monitodehabitos.infra.controller.clientDto.CreateC
 import br.com.monitodehabitos.monitodehabitos.infra.controller.clientDto.HabitResponseDto;
 import br.com.monitodehabitos.monitodehabitos.infra.controller.clientDto.UpdateClientDto;
 import br.com.monitodehabitos.monitodehabitos.infra.email.SendEmailCreateUser;
+import br.com.monitodehabitos.monitodehabitos.infra.infras.security.TokenService;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +32,16 @@ public class ClientController {
     private final DeleteClient deleteClient;
     private final UpdateClient updateClient;
     private final SendEmailCreateUser emailCreateUser;
+    private final TokenService tokenService;
 
-    public ClientController(CreateClient createClient, FactoryClient factoryClient, FindClient findClient, DeleteClient deleteClient, UpdateClient updateClient, SendEmailCreateUser emailCreateUser) {
+    public ClientController(CreateClient createClient, FactoryClient factoryClient, FindClient findClient, DeleteClient deleteClient, UpdateClient updateClient, SendEmailCreateUser emailCreateUser, TokenService tokenService) {
         this.createClient = createClient;
         this.factoryClient = factoryClient;
         this.findClient = findClient;
         this.deleteClient = deleteClient;
         this.updateClient = updateClient;
         this.emailCreateUser = emailCreateUser;
+        this.tokenService = tokenService;
     }
 
     @PostMapping()
@@ -53,10 +58,13 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto("Usuário criado com sucesso"));
     }
 
-    @GetMapping("/{id}")
-    private ResponseEntity<HabitResponseDto> findByID(@PathVariable("id") String id) {
+    @GetMapping()
+    private ResponseEntity<HabitResponseDto> findByToken(@RequestHeader("Authorization") String authorization) {
         log.info("Início da busca do usuário por id::UserController");
+        String token = authorization.replace("Bearer ", "");
+        var id = tokenService.getClaim(token);
         Client client = this.findClient.findClient(id);
+
         log.info("Fim da busca do usuário por id::UserController");
         return ResponseEntity.ok().body(new HabitResponseDto(client));
     }

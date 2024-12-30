@@ -53,6 +53,20 @@ public class TokenService {
         }
     }
 
+    public String getClaim(String tokenJWT) {
+        try {
+            var algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("API Monitor De Habitos")
+                    .build()
+                    .verify(tokenJWT)
+                    .getClaim("id")
+                    .asString();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Token JWT inválido ou expirado!");
+        }
+    }
+
     public String recoverToken(HttpServletRequest request) {
         var authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null) {

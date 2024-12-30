@@ -11,7 +11,6 @@ public class GenerateCodeService {
     public String generateRandomCode() {
         char[] newCodeArray = new char[CODE_LENGTH];
         int size = CHARACTERS.length();
-
         for (int i = 0; i < CODE_LENGTH; i++) {
             int position = secureRandom.nextInt(size);
             char character = CHARACTERS.charAt(position);
